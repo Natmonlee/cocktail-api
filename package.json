@@ -1,0 +1,22 @@
+{
+  "name": "mix-o-logic",
+  "version": "1.0.0",
+  "description": "A cocktail recommendation website.\r A website that uses Cocktail API from API Ninjas (https://api-ninjas.com/api/cocktail) and allows the user to see up to ten cocktail names, recipes and instructions - based on the input of ingredients or by partial/full name of the cocktail",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Natmonlee/Mix-O-Logic.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Natmonlee/Mix-O-Logic/issues"
+  },
+  "homepage": "https://github.com/Natmonlee/Mix-O-Logic#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
