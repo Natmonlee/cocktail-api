@@ -1,15 +1,16 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const url = require('url')
-const querystring = require('querystring')
-// const Article = require('./models').Article;
 const app = express()
 const port = 5000
+const fs = require("fs");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const xlsxFile = require('read-excel-file/node');
+fs.readFile("data.csv", "utf-8", (err, data) => {
+  if (err) console.log(err);
+  else console.log(data);
+});
 
 
 app.use(function(req, res, next) {
@@ -27,18 +28,12 @@ const results = [
   {name: "whiskey sour", ingredients: ["whiskey", "lemon juice"]}
 ];
 
-xlsxFile('all_drinks.xls').then(
-  (result) => {
-    const database = result;
-    console.log(database);
-    return database;
-  }
-)
+
 
 
 app.get('/', (req, res) => {
-  let search = req.query.search;
-  res.send(database);
+  //let search = req.query.search;
+  res.send("hello");
 })
 
 app.listen(port, () => {
