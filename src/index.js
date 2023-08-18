@@ -26,32 +26,52 @@ app.use(function(req, res, next) {
   next();
 });
 
-const formatFetchedInfo = (fetchedInfo) => {
-  let recipe = [];
-  recipe.push(fetchedInfo.Name);
-  recipe.push(fetchedInfo.Alcoholic);
-  recipe.push(fetchedInfo.Glass);
-  recipe.push(fetchedInfo.Photo);
-  let fetchedIngredientsList = {};
+let searchName;
+let searchAlcoholic;
+let searchGlass;
+let searchIngredients;
+
+const generateResults =  (database) => {
+  let results = [];
+  for (const recipe of database) {
+    if (recipe.Name.toLowerCase().includes(searchName.toLowerCase()) === true) {
+      results.push(recipe);
+    }
+  }
+  return results;
+}
+
+
+
+const formatFetchedRecipe = (fetchedRecipe) => {
+  let recipe = {};
+  recipe.name = fetchedRecipe.Name;
+  recipe.alcoholic = fetchedRecipe.Alcoholic === 'Alcoholic' ? true : false;
+  recipe.glass = fetchedRecipe.Glass;
+  recipe.photoUrl = fetchedRecipe.Photo;
+  let ingredients = {};
   for (let i = 0; i < 16; i++) {
-      for (const [key, value] of Object.entries(fetchedInfo)){
+      for (const [key, value] of Object.entries(fetchedRecipe)){
           if (key === 'Ingredient ' + i) {
               if (value) {
-                  fetchedIngredientsList[value] = fetchedInfo['Measurement ' + i];
+                  ingredients[value] = fetchedRecipe['Measurement ' + i];
               }
           }      
       }
   }
-  recipe.push(fetchedIngredientsList);
-  recipe.push(fetchedInfo.Method);
+  recipe.ingredients = ingredients;
+  recipe.method = fetchedRecipe.Method;
   return recipe;
 }
 
 
 app.get('/', (req, res) => {
-  let search = req.query.search;
-  let currentRecipe = database.data[search];
-  res.send(formatFetchedInfo(currentRecipe));
+  //const results = formatFetchedRecipe(database.data[search]);
+  searchName = req.query.name;
+  searchAlcoholic = req.query.alcoholic;
+  searchGlass = req.query.glass;
+  searchIngredients = req.query.ingredients;
+  res.send(generateResults(database.data));
 })
 
 app.listen(port, () => {
