@@ -3,15 +3,19 @@ const bodyParser = require('body-parser')
 const app = express()
 const port = 5000
 const fs = require("fs");
+const papa = require('papaparse')
+let database;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-fs.readFile("data.csv", "utf-8", (err, data) => {
-  if (err) console.log(err);
-  else console.log(data);
-});
-
+fs.readFile("all_drinks.csv", "utf-8", (err, data) => {
+  if (err) {
+    console.log(err)}
+  else {
+    database = papa.parse(data, {header:true});
+}
+})
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -22,18 +26,32 @@ app.use(function(req, res, next) {
   next();
 });
 
-const results = [
-  {name: "bloody mary", ingredients: ["tomato juice", "vodka"]},
-  {name: "cosmopoliton", ingredients: ["cranberry juice", "vodka"]},
-  {name: "whiskey sour", ingredients: ["whiskey", "lemon juice"]}
-];
-
-
+const formatFetchedInfo = (fetchedInfo) => {
+  let recipe = [];
+  recipe.push(fetchedInfo.Name);
+  recipe.push(fetchedInfo.Alcoholic);
+  recipe.push(fetchedInfo.Glass);
+  recipe.push(fetchedInfo.Photo);
+  let fetchedIngredientsList = {};
+  for (let i = 0; i < 16; i++) {
+      for (const [key, value] of Object.entries(fetchedInfo)){
+          if (key === 'Ingredient ' + i) {
+              if (value) {
+                  fetchedIngredientsList[value] = fetchedInfo['Measurement ' + i];
+              }
+          }      
+      }
+  }
+  recipe.push(fetchedIngredientsList);
+  recipe.push(fetchedInfo.Method);
+  return recipe;
+}
 
 
 app.get('/', (req, res) => {
-  //let search = req.query.search;
-  res.send("hello");
+  let search = req.query.search;
+  let currentRecipe = database.data[search];
+  res.send(formatFetchedInfo(currentRecipe));
 })
 
 app.listen(port, () => {
@@ -41,22 +59,3 @@ app.listen(port, () => {
 })
 
 
-
-/*
-const getResult = async () => {
-  const endpoint = "https://api.api-ninjas.com/v1/cocktail?" + searchMethod + "=" + textInputValue;
-  try {
-      const response = await fetch(endpoint, {
-          method: "GET",
-          headers: {
-              "X-Api-Key": "E6CyLZAZwxU0FySnN6w0IQ==Afe3GoBzy0YapmO8"
-          }
-      });
-      if (response.ok) {
-          const finalResponse = await response.json();     
-  }
-  catch (error) {
-      console.log(error);
-      throw new Error('Request failed!');
-  };
-} */

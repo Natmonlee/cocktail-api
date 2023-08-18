@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Natmonlee/Mix-O-Logic#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "papaparse": "^5.4.1"
   }
 }
