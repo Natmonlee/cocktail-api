@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail API</title>
+</head>
+<body>
+    <h1>Cocktail API</h1>
+    <p>This API allows the user to access a database of cocktail recipes. You can filter results by cocktail name, ingredients, glass type and whether or not the cocktail contains alcohol.</p>
+    <h2>Endpoints</h2>
+    <h3>/v1/cocktail-recipes</h3>
+    <p>Retrieves cocktail recipes from the database that match the parameters you have provided - or all cocktails if no paramaters are added.</p>
+    <h4>Parameters</h4>
+    <p>
+        Name - string (case-insensitive) - optional -> Only cocktails with names including this string will be returned <br>
+        Alcoholic - boolean - optional -> If true, only cocktails with alcohol will be returned, if false, only cocktails without alcohol will be returned <br>
+        Glass - string (case-insensitive) - optional -> Only cocktails with glasses including this string will be returned <br>
+        Ingredients - array - optional -> Only cocktails with ingredients including all array items will be returned <br>
+
+
+    </p>
+
+
+    let name;
+    let alcoholic = true;
+    let glass;
+    let ingredients;
+    let minIngredients = 10;
+    let maxIngredients = 100;
+    <h4>Returns</h4>
+    <h3>/v1/cocktail-glasses</h3>
+    <p>Retrieves all of the different glasses of the cocktails in the database.</p>
+    <h4>Parameters</h4>
+    <p>None</p>
+    <h4>Returns</h4>
+    <h3>/v1/cocktail-ingredients</h3>
+    <p>Retrieves all of the different ingredients of the cocktails in the database.</p>
+    <h4>Parameters</h4>
+    <p>None</p>
+    <h4>Returns</h4>
+    <h2>Working Examples</h2>
+    
+
+
+
+    <script src="./apiTest.js" type="text/javascript"></script>
+</body>
+</html>

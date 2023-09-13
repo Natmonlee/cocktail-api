@@ -92,8 +92,18 @@ const generateResults = (database) => {
     }
     else {
       const ingredientsArray = inputIngredients.split(',');
-      const checkRecipeIncludes = ingredientsArray.every((ingredient) => recipe.ingredients.hasOwnProperty(ingredient));
-      return checkRecipeIncludes;
+      for (const ingredient of ingredientsArray) {
+        let included = false;
+        for (const property in recipe.ingredients) {
+          if (property.includes(ingredient)) {
+            included = true;
+          }
+        }
+        if (included === false) {
+          return false;
+        }     
+      }
+      return true;
     }
   }
 
@@ -161,7 +171,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-app.get('/cocktails', (req, res) => {
+app.get('/cocktail-recipes', (req, res) => {
   if (req.query.name) {
     searchName = req.query.name.toLowerCase();
   };
@@ -185,13 +195,13 @@ app.get('/cocktails', (req, res) => {
 }
 )
 
-app.get('/cocktail-glasses', (req, res) => {
+app.get('/v1/cocktail-glasses', (req, res) => {
   allGlasses = returnAll('glass', formattedDatabase);
   res.send(allGlasses);
 }
 )
 
-app.get('/cocktail-ingredients', (req, res) => {
+app.get('/v1/cocktail-ingredients', (req, res) => {
   res.send(returnAllIngredients(formattedDatabase));
 }
 )
