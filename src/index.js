@@ -17,15 +17,20 @@ let searchMaxIngredients;
 const formatRecipe = (rawRecipe) => {
   let recipe = {};
   recipe.name = rawRecipe.Name;
-  recipe.alcoholic = rawRecipe.Alcoholic;
-  recipe.glass = rawRecipe.Glass;
+  if (rawRecipe.Alcoholic.toLowerCase() === "alcoholic") {
+    recipe.alcoholic = true;
+  }
+  else {
+    recipe.alcoholic = false;
+  }
+  recipe.glass = rawRecipe.Glass.toLowerCase();
   recipe.photoUrl = rawRecipe.Photo;
   let ingredients = {};
   for (let i = 0; i < 16; i++) {
       for (const [key, value] of Object.entries(rawRecipe)){
           if (key === 'Ingredient ' + i) {
               if (value) {
-                  ingredients[value.toLowerCase()] = rawRecipe['Measurement ' + i];
+                  ingredients[value.toLowerCase()] = rawRecipe['Measurement ' + i].toLowerCase();
               }
           }      
       }
@@ -69,9 +74,9 @@ const generateResults = (database) => {
       return true;
     }
     else {
-      let alcoholPreference = 'Alcoholic';
+      let alcoholPreference = true;
     if (inputAlcohol === 'false') {
-      alcoholPreference = 'Non alcoholic';
+      alcoholPreference = false;
     }
     return recipe.alcoholic === alcoholPreference;
     }
@@ -137,9 +142,10 @@ const generateResults = (database) => {
 const returnAll = (param, database) => {
   const resultSet = new Set();
   for (recipe of database) {
-    resultSet.add(recipe[param]);
+    resultSet.add(recipe[param].toLowerCase());
   }
-  return resultSet;
+  const resultArray = [...resultSet];
+  return resultArray;
 }
 
 
@@ -147,11 +153,11 @@ const returnAllIngredients = (database) => {
   const resultSet = new Set();
   for (recipe of database) {
     for (ingredient in recipe.ingredients) {
-      resultSet.add(ingredient);
+      resultSet.add(ingredient.toLowerCase());
     }
   }
-  console.log(resultSet);
-  return resultSet;
+  const resultArray = [...resultSet];
+  return resultArray;
 } 
 
 
