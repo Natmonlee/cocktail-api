@@ -14,6 +14,10 @@ let allGlasses;
 let searchMinIngredients;
 let searchMaxIngredients;
 
+
+
+
+
 const formatRecipe = (rawRecipe) => {
   let recipe = {};
   recipe.name = rawRecipe.Name;
@@ -211,3 +215,4 @@ app.get('/v1/cocktail-ingredients', (req, res) => {
   res.send(returnAllIngredients(formattedDatabase));
 }
 )
+

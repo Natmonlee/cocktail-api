@@ -3,43 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="Style.css">
     <title>Cocktail API</title>
 </head>
 <body>
     <h1>Cocktail API</h1>
+    <h1>Base URL: ????????????</h1>
     <p>This API allows the user to access a database of cocktail recipes. You can filter results by cocktail name, ingredients, glass type and whether or not the cocktail contains alcohol.</p>
     <h2>Endpoints</h2>
-    <h3>/v1/cocktail-recipes</h3>
-    <p>Retrieves cocktail recipes from the database that match the parameters you have provided - or all cocktails if no parameters are added.</p>
-    <h4>Parameters</h4>
-    <p>
-        Name - string (case-insensitive) - optional => Only cocktails with names including this string will be returned <br>
-        Alcoholic - boolean - optional => If true, only cocktails with alcohol will be returned, if false, only cocktails without alcohol will be returned <br>
-        Glass - string (case-insensitive) - optional => Only cocktails with glasses including this string will be returned <br>
-        Ingredients - array - optional => Only cocktails with ingredients including all strings in array will be returned <br>
-        MinIngredients - number - optional (default = 1) => Only cocktails with a minimum of this number of ingredients will be returned <br>
-        MaxIngredients - number - optional (default = infinity) => Only cocktails with a maximum of this number of ingredients will be returned <br>
-    </p>
-    <h4>Returns</h4>
-    <h5>JSON object containing all cocktails matching the specifications</h5>
-    <pre id="cocktailResult"></pre>
-    <h3>/v1/cocktail-glasses</h3>
-    <p>Retrieves all of the different glasses of the cocktails in the database.</p>
-    <h4>Parameters</h4>
-    <p>None</p>
-    <h4>Returns</h4>
-    <h5>Array containing all glasses in database</h5>
-    <p id="glassResult"></p>
-    <h3>/v1/cocktail-ingredients</h3>
-    <p>Retrieves all of the different ingredients of the cocktails in the database.</p>
-    <h4>Parameters</h4>
-    <p>None</p>
-    <h4>Returns</h4>
-    <h5>Array containing ingredients in database</h5>
-    <p id="ingredientResult"></p>
-    <h2>Working Examples</h2>
-
-
+    <div id="menuItem1" class="menuItem">/v1/cocktail-recipes
+        <div id="dropItem1" class="dropItem">
+            <p>Retrieves cocktail recipes from the database that match the parameters you have provided - or all cocktails if no parameters are added.</p>
+            <h4>Parameters</h4>
+            <p>
+                Name - string (case-insensitive) - optional => Only cocktails with names including this string will be returned <br>
+                Alcoholic - boolean - optional => If true, only cocktails with alcohol will be returned, if false, only cocktails without alcohol will be returned <br>
+                Glass - string (case-insensitive) - optional => Only cocktails with glasses including this string will be returned <br>
+                Ingredients - comma-separated strings - optional => Only cocktails with ingredients including all strings in array will be returned <br>
+                MinIngredients - number - optional (default = 1) => Only cocktails with a minimum of this number of ingredients will be returned <br>
+                MaxIngredients - number - optional (default = infinity) => Only cocktails with a maximum of this number of ingredients will be returned <br>
+            </p>
+            <h4>Returns</h4>
+            <h5>JSON object containing all cocktails matching the specifications</h5>
+            <pre id="cocktailResult"></pre>
+        </div>
+    </div>
+    <div id="menuItem2" class="menuItem">/v1/cocktail-glasses
+        <div id="dropItem2" class="dropItem">
+            <p>Retrieves all of the different glasses of the cocktails in the database.</p>
+            <h4>Parameters</h4>
+            <p>None</p>
+            <h4>Returns</h4>
+            <h5>Array containing all glasses in database</h5>
+            <p id="glassResult"></p>
+        </div>
+    </div>
+    <div id="menuItem3" class="menuItem">/v1/cocktail-ingredients
+        <div id="dropItem3" class="dropItem">
+        <p>Retrieves all of the different ingredients of the cocktails in the database.</p>
+        <h4>Parameters</h4>
+        <p>None</p>
+        <h4>Returns</h4>
+        <h5>Array containing ingredients in database</h5>
+        <p id="ingredientResult"></p>
+        </div>
+    </div>
+   
 
     <script src="../apiTest.js" type="text/javascript"></script>
 </body>
