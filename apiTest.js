@@ -22,8 +22,28 @@ const getResult = async () => {
     //const endpoint = "http://13.41.54.243/";
     const glassEndpoint = 'http://localhost:5000/v1/cocktail-glasses'
     const ingredientEndpoint = 'http://localhost:5000/v1/cocktail-ingredients'
-    const cocktailEndpoint = `http://localhost:5000/cocktail-recipes?ingredients=${ingredients}`;
+    const cocktailEndpoint = "http://localhost:5000/cocktail-recipes?name=natalie";
+    const postEndpoint = "http://localhost:5000/v1/add-cocktail";
     try {
+
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        headers.append("Accept", "application/json");
+        headers.append("Origin", "http://localhost:3000");
+
+
+
+        fetch(postEndpoint, {
+            method: "POST",
+            headers: headers,
+            body: JSON.stringify({
+            "name": "Natalie's Cocktail",
+            "alcoholic": true,
+            "glass": "Cocktail Glass",
+            "Ingredients": "rum, vodka, orange, coconut"
+        })
+        })
+
         const glassResponse = await fetch(glassEndpoint, {
             method: "GET"
         });
@@ -33,6 +53,7 @@ const getResult = async () => {
         const cocktailResponse = await fetch(cocktailEndpoint, {
             method: "GET"
         });
+
 
         if (glassResponse.ok) {
             const glassResultText = await glassResponse.json();

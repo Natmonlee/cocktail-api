@@ -14,10 +14,6 @@ let allGlasses;
 let searchMinIngredients;
 let searchMaxIngredients;
 
-
-
-
-
 const formatRecipe = (rawRecipe) => {
   let recipe = {};
   recipe.name = rawRecipe.Name;
@@ -169,10 +165,14 @@ const returnAllIngredients = (database) => {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, Content-Type, Accept"
+  );
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST"
   );
   next();
 });
@@ -180,6 +180,13 @@ app.use(function(req, res, next) {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+app.post('/v1/add-cocktail', (req,res) => {
+  console.log(formattedDatabase[formattedDatabase.length-1]);
+  formattedDatabase.push(req.body);
+  //console.log(formattedDatabase);
+}
+)
 
 app.get('/cocktail-recipes', (req, res) => {
   if (req.query.name) {
@@ -215,4 +222,5 @@ app.get('/v1/cocktail-ingredients', (req, res) => {
   res.send(returnAllIngredients(formattedDatabase));
 }
 )
+
 
