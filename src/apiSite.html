@@ -11,8 +11,9 @@
     <h1>Base URL: ????????????</h1>
     <p>This API allows the user to access a database of cocktail recipes. You can filter results by cocktail name, ingredients, glass type and whether or not the cocktail contains alcohol.</p>
     <h2>Endpoints</h2>
-    <div id="menuItem1" class="menuItem">GET - /v1/cocktail-recipes
-        <div id="dropItem1" class="dropItem">
+    <div id="menuItem1" class="menuItem getItem">
+        <div><span class="getText">GET</span> - /v1/cocktail-recipes </div><div class="downArrow">&#8964</div>
+        <div id="dropItem1" class="dropItemGet">
             <p>Retrieves cocktail recipes from the database that match the parameters you have provided - or all cocktails if no parameters are added.</p>
             <h4>Parameters</h4>
             <p>
@@ -28,8 +29,9 @@
             <pre id="cocktailResult"></pre>
         </div>
     </div>
-    <div id="menuItem2" class="menuItem">GET - /v1/cocktail-glasses
-        <div id="dropItem2" class="dropItem">
+    <div id="menuItem2" class="menuItem getItem">
+        <div><span class="getText">GET</span> - /v1/cocktail-glasses </div><div class="downArrow">&#8964</div>
+        <div id="dropItem2" class="dropItemGet">
             <p>Retrieves all of the different glasses of the cocktails in the database.</p>
             <h4>Parameters</h4>
             <p>None</p>
@@ -38,8 +40,17 @@
             <p id="glassResult"></p>
         </div>
     </div>
-    <div id="menuItem3" class="menuItem">GET - /v1/cocktail-ingredients
-        <div id="dropItem3" class="dropItem">
+    <div id="dropItem2" class="dropItemGet">
+        <p>Retrieves all of the different glasses of the cocktails in the database.</p>
+        <h4>Parameters</h4>
+        <p>None</p>
+        <h4>Response</h4>
+        <h5>Array containing all glasses in database</h5>
+        <p id="glassResult"></p>
+    </div>
+    <div id="menuItem3" class="menuItem getItem">
+        <div><span class="getText">GET</span> - /v1/cocktail-ingredients </div><div class="downArrow">&#8964</div>
+        <div id="dropItem3" class="dropItemGet">
         <p>Retrieves all of the different ingredients of the cocktails in the database.</p>
         <h4>Parameters</h4>
         <p>None</p>
@@ -48,8 +59,9 @@
         <p id="ingredientResult"></p>
         </div>
     </div>
-    <div id="menuItem4" class="menuItem">POST - /v1/add-cocktail
-        <div id="dropItem4" class="dropItem">
+    <div id="menuItem4" class="menuItem postItem">
+        <div><span class="postText">POST</span> - /v1/add-cocktail </div> <div class="downArrow">&#8964</div>
+        <div id="dropItem4" class="dropItemPost">
         <p>Add a cocktail to the database</p>
         <h4>Parameters</h4>
         <p>Body - object - required => 

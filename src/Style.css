@@ -1,19 +1,68 @@
-.menuItem {
-    display: inline-block;
-    width: 50%;
-    background-color: aqua;
-    border: 3px solid black;
-    border-radius: 5px;
+body {
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.dropItem {
+.menuItem {
+    display: flex;
+    width: 75%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    padding: 9px 6px;
+    margin-top: 6px;
+    margin-bottom: 0;
+
+}
+
+.getItem {
+    background-color: rgba(26, 110, 220, 0.2);
+    border: 3px solid rgb(4, 28, 56);
+}
+
+.postItem {
+    background-color: rgba(17, 230, 17, 0.2);
+    border: 3px solid rgb(0, 56, 9);
+
+}
+
+.dropItemGet {
     display: none;
     width: 100%;
-    background-color: aqua;
-    border: 3px solid black;
-    border-radius: 5px;
+}
+
+.dropItemPost {
+    display: none;
+    width: 100%;
+}
+
+p {
+    margin-block-start: 0;
 }
 
 .dropDownActive {
     display: block;
+    overflow-x: scroll;
+} 
+
+.getText {
+    background-color: rgba(26, 110, 220, 0.826);
+    border: 2px solid rgba(24, 54, 191, 0.826);
+    border-radius: 3px;
+    padding: 2px 5px;
+    margin: 2px;
 }
+
+.postText {
+    background-color: rgb(17, 230, 17);
+    border: 2px solid rgb(11, 96, 8);
+    border-radius: 3px;
+    padding: 2px 5px;
+    margin: 2px;
+}
+
+.downArrow {
+    font-size: 25px;
+}
+

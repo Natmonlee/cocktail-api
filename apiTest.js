@@ -26,7 +26,7 @@ const getResult = async () => {
     //const endpoint = "http://13.41.54.243/";
     const glassEndpoint = 'http://localhost:5000/v1/cocktail-glasses'
     const ingredientEndpoint = 'http://localhost:5000/v1/cocktail-ingredients'
-    const cocktailEndpoint = "http://localhost:5000/cocktail-recipes?name=new";
+    const cocktailEndpoint = "http://localhost:5000/cocktail-recipes?name=martini";
     const postEndpoint = "http://localhost:5000/v1/add-cocktail";
     try {
 
