@@ -182,31 +182,63 @@ app.listen(port, () => {
 })
 
 app.post('/v1/add-cocktail', (req,res) => {
-  console.log(formattedDatabase[formattedDatabase.length-1]);
-  formattedDatabase.push(req.body);
-  //console.log(formattedDatabase);
+  let response = [];
+  if (!req.body.name) {
+    response.push('name key required(value must be a String)');
+  }
+  else if (typeof req.body.name !== "string") {
+    response.push('value of name key must be a String');
+  }
+  if (!req.body.alcoholic) {
+    response.push('alcoholic key required(value must be a Boolean)');
+  }
+  else if (typeof req.body.alcoholic !== "boolean") {
+    response.push('value of alcoholic key must be a Boolean');
+  }
+  if (req.body.glass) {
+    if (typeof req.body.glass !== "string") {
+      response.push('value of glass key must be a String');
+    }
+  }
+  console.log(response);
+  if (response.length === 0) {
+    formattedDatabase.push(req.body);
+  }
+  res.send(response);
 }
 )
+
+/*
+Object properties: <br>
+            photoUrl (string - valid url) optional <br>
+            ingredients (object containing one or more keys of data-type string) required <br>
+            method (string) required <br></br>
+
+            res.send(response???
+                Code 200 Description successful operation <br>
+        Code 405 Description Invalid input)
+*/
+
 
 app.get('/cocktail-recipes', (req, res) => {
   if (req.query.name) {
     searchName = req.query.name.toLowerCase();
-  };
+  }
   if (req.query.alcoholic) {
     searchAlcoholic = req.query.alcoholic;
-  };
+  }
   if (req.query.ingredients) {
     searchIngredients = req.query.ingredients.toLowerCase();
-  };
+  }
   if (req.query.glass) {
     searchGlass = req.query.glass.toLowerCase();
-  };
+  }
   if (req.query.minIngredients) {
     searchMinIngredients = req.query.minIngredients;
-  };
+  }
   if (req.query.maxIngredients) {
     searchMaxIngredients = req.query.maxIngredients;
-  };
+  }
 
   res.send(generateResults(formattedDatabase));
 }

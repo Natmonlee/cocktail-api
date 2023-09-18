@@ -11,7 +11,7 @@
     <h1>Base URL: ????????????</h1>
     <p>This API allows the user to access a database of cocktail recipes. You can filter results by cocktail name, ingredients, glass type and whether or not the cocktail contains alcohol.</p>
     <h2>Endpoints</h2>
-    <div id="menuItem1" class="menuItem">/v1/cocktail-recipes
+    <div id="menuItem1" class="menuItem">GET - /v1/cocktail-recipes
         <div id="dropItem1" class="dropItem">
             <p>Retrieves cocktail recipes from the database that match the parameters you have provided - or all cocktails if no parameters are added.</p>
             <h4>Parameters</h4>
@@ -23,29 +23,51 @@
                 MinIngredients - number - optional (default = 1) => Only cocktails with a minimum of this number of ingredients will be returned <br>
                 MaxIngredients - number - optional (default = infinity) => Only cocktails with a maximum of this number of ingredients will be returned <br>
             </p>
-            <h4>Returns</h4>
+            <h4>Response</h4>
             <h5>JSON object containing all cocktails matching the specifications</h5>
             <pre id="cocktailResult"></pre>
         </div>
     </div>
-    <div id="menuItem2" class="menuItem">/v1/cocktail-glasses
+    <div id="menuItem2" class="menuItem">GET - /v1/cocktail-glasses
         <div id="dropItem2" class="dropItem">
             <p>Retrieves all of the different glasses of the cocktails in the database.</p>
             <h4>Parameters</h4>
             <p>None</p>
-            <h4>Returns</h4>
+            <h4>Response</h4>
             <h5>Array containing all glasses in database</h5>
             <p id="glassResult"></p>
         </div>
     </div>
-    <div id="menuItem3" class="menuItem">/v1/cocktail-ingredients
+    <div id="menuItem3" class="menuItem">GET - /v1/cocktail-ingredients
         <div id="dropItem3" class="dropItem">
         <p>Retrieves all of the different ingredients of the cocktails in the database.</p>
         <h4>Parameters</h4>
         <p>None</p>
-        <h4>Returns</h4>
+        <h4>Response</h4>
         <h5>Array containing ingredients in database</h5>
         <p id="ingredientResult"></p>
+        </div>
+    </div>
+    <div id="menuItem4" class="menuItem">POST - /v1/add-cocktail
+        <div id="dropItem4" class="dropItem">
+        <p>Add a cocktail to the database</p>
+        <h4>Parameters</h4>
+        <p>Body - object - required => 
+            Object properties: <br>
+            name (string) required <br>
+            alcoholic (boolean) required<br>
+            glass (string) optional <br>
+            photoUrl (string - valid url) optional <br>
+            ingredients (object containing one or more keys of data-type string) required <br>
+            method (string) required <br>
+        </p>
+        <h4>Response</h4>
+        <h5>
+            ???????????? <br>
+        Code 200 Description successful operation <br>
+        Code 405 Description Invalid input
+        </h5>
+        <p id="postResult"></p>
         </div>
     </div>
    
