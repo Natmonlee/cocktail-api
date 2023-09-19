@@ -160,7 +160,14 @@ const returnAllIngredients = (database) => {
   return resultArray;
 } 
 
-
+function isUrlValid(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+ }
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -182,25 +189,49 @@ app.listen(port, () => {
 })
 
 app.post('/v1/add-cocktail', (req,res) => {
+  console.log(typeof req.body.ingredients);
   let response = [];
   if (!req.body.name) {
-    response.push('name key required(value must be a String)');
+    response.push('name(lowercase) key required(value must be a String)');
   }
   else if (typeof req.body.name !== "string") {
     response.push('value of name key must be a String');
   }
   if (!req.body.alcoholic) {
-    response.push('alcoholic key required(value must be a Boolean)');
+    response.push('alcoholic(lowercase) key required(value must be a Boolean)');
   }
   else if (typeof req.body.alcoholic !== "boolean") {
-    response.push('value of alcoholic key must be a Boolean');
+    response.push('value of alcoholic key must be a boolean');
   }
   if (req.body.glass) {
     if (typeof req.body.glass !== "string") {
-      response.push('value of glass key must be a String');
+      response.push('value of glass key must be a string');
     }
   }
-  console.log(response);
+  if (!req.body.method) {
+    response.push('method(lowercase) key required(value must be a string)');
+  }
+  else if (typeof req.body.method !== "string") {
+    response.push('value of method key must be a string');
+  }
+  if (req.body.photoUrl) {
+    if (typeof req.body.photoUrl !== "string") {
+      response.push('value of photoUrl key must be a string');
+    }
+    else if (isUrlValid(req.body.photoUrl) === false) {
+      response.push('value of photoUrl key must be a valid URL');
+    }
+  }
+  if (!req.body.ingredients) {
+    response.push('ingredients(lowercase) key required(value must be an object with keys of the string-type)');
+  }
+  else if (typeof req.body.ingredients !== "object") {
+    response.push('value of ingredients key must be an object with keys of the string-type');
+  }
+  else if (Object.keys(req.body.ingredients).length === 0) {
+    response.push('ingredients object must have at least one key(of string-type)')
+  }
+
   if (response.length === 0) {
     formattedDatabase.push(req.body);
   }
@@ -209,16 +240,11 @@ app.post('/v1/add-cocktail', (req,res) => {
 )
 
 /*
-Object properties: <br>
-            photoUrl (string - valid url) optional <br>
-            ingredients (object containing one or more keys of data-type string) required <br>
-            method (string) required <br></br>
 
             res.send(response???
                 Code 200 Description successful operation <br>
         Code 405 Description Invalid input)
 */
-
 
 app.get('/cocktail-recipes', (req, res) => {
   if (req.query.name) {

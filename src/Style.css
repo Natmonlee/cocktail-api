@@ -43,8 +43,18 @@ p {
 
 .dropDownActive {
     display: block;
-    overflow-x: scroll;
 } 
+
+.result {
+    background-color: rgba(0, 0, 0, 0.879);
+    color: rgba(255, 255, 255, 0.945);
+    width: 90%;
+    border-radius: 4px;
+}
+
+#cocktailResult {
+    overflow-x: scroll;
+}
 
 .getText {
     background-color: rgba(26, 110, 220, 0.826);

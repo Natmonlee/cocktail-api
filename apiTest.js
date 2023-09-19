@@ -50,7 +50,8 @@ const getResult = async () => {
             "name": "New cocktail",
             "alcoholic": true,
             "glass": "cocktail glass",
-            "Ingredients": "rum, vodka, orange, coconut"
+            "ingredients": {log:one},
+            "method": 'Mix it up!'
         })
         });
 

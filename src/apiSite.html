@@ -26,7 +26,7 @@
             </p>
             <h4>Response</h4>
             <h5>JSON object containing all cocktails matching the specifications</h5>
-            <pre id="cocktailResult"></pre>
+            <pre class="result" id="cocktailResult"></pre>
         </div>
     </div>
     <div id="menuItem2" class="menuItem getItem">
@@ -37,16 +37,8 @@
             <p>None</p>
             <h4>Response</h4>
             <h5>Array containing all glasses in database</h5>
-            <p id="glassResult"></p>
+            <p class="result" id="glassResult"></p>
         </div>
-    </div>
-    <div id="dropItem2" class="dropItemGet">
-        <p>Retrieves all of the different glasses of the cocktails in the database.</p>
-        <h4>Parameters</h4>
-        <p>None</p>
-        <h4>Response</h4>
-        <h5>Array containing all glasses in database</h5>
-        <p id="glassResult"></p>
     </div>
     <div id="menuItem3" class="menuItem getItem">
         <div><span class="getText">GET</span> - /v1/cocktail-ingredients </div><div class="downArrow">&#8964</div>
@@ -56,7 +48,7 @@
         <p>None</p>
         <h4>Response</h4>
         <h5>Array containing ingredients in database</h5>
-        <p id="ingredientResult"></p>
+        <p class="result" id="ingredientResult"></p>
         </div>
     </div>
     <div id="menuItem4" class="menuItem postItem">
@@ -70,7 +62,7 @@
             alcoholic (boolean) required<br>
             glass (string) optional <br>
             photoUrl (string - valid url) optional <br>
-            ingredients (object containing one or more keys of data-type string) required <br>
+            ingredients (object with properties of the String data-type) required <br>
             method (string) required <br>
         </p>
         <h4>Response</h4>
@@ -79,7 +71,7 @@
         Code 200 Description successful operation <br>
         Code 405 Description Invalid input
         </h5>
-        <p id="postResult"></p>
+        <p class="result" id="postResult"></p>
         </div>
     </div>
    
