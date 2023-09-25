@@ -172,12 +172,12 @@ function isUrlValid(string) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.header(
+  res.append("Access-Control-Allow-Origin", "*");
+  res.append(
     "Access-Control-Allow-Headers",
     "Origin, Content-Type, Accept"
   );
-  res.header(
+  res.append(
     "Access-Control-Allow-Methods",
     "GET, POST"
   );
@@ -189,64 +189,101 @@ app.listen(port, () => {
 })
 
 app.post('/v1/add-cocktail', (req,res) => {
-  console.log(typeof req.body.ingredients);
-  let response = [];
+  let responseBody = {
+    "success": true,
+    "errors": {}
+  };
+
   if (!req.body.name) {
-    response.push('name(lowercase) key required(value must be a String)');
+    responseBody.success = false;
+    responseBody.errors.nameError = 'name(lowercase) property required(value must be a String)';
   }
   else if (typeof req.body.name !== "string") {
-    response.push('value of name key must be a String');
+    responseBody.success = false;
+    responseBody.errors.nameError = 'value of name property must be a String';
   }
   if (!req.body.alcoholic) {
-    response.push('alcoholic(lowercase) key required(value must be a Boolean)');
+    responseBody.success = false;
+    responseBody.errors.alcoholicError = 'alcoholic(lowercase) property required(value must be a Boolean)';
   }
   else if (typeof req.body.alcoholic !== "boolean") {
-    response.push('value of alcoholic key must be a boolean');
+    responseBody.success = false;
+    responseBody.errors.alcoholicError = 'value of alcoholic property must be a boolean';
   }
   if (req.body.glass) {
     if (typeof req.body.glass !== "string") {
-      response.push('value of glass key must be a string');
+      responseBody.success = false;
+      responseBody.errors.glassError = 'value of glass property must be a string';
     }
   }
   if (!req.body.method) {
-    response.push('method(lowercase) key required(value must be a string)');
+    responseBody.success = false;
+    responseBody.errors.methodError = 'method(lowercase) property required(value must be a string)';
   }
   else if (typeof req.body.method !== "string") {
-    response.push('value of method key must be a string');
+    responseBody.success = false;
+    responseBody.errors.methodError = 'value of method property must be a string';
   }
   if (req.body.photoUrl) {
     if (typeof req.body.photoUrl !== "string") {
-      response.push('value of photoUrl key must be a string');
+      responseBody.success = false;
+      responseBody.errors.photoUrlError = 'value of photoUrl property must be a string';
     }
     else if (isUrlValid(req.body.photoUrl) === false) {
-      response.push('value of photoUrl key must be a valid URL');
+      responseBody.success = false;
+      responseBody.errors.photoUrlError = 'value of photoUrl property must be a valid URL';
     }
   }
   if (!req.body.ingredients) {
-    response.push('ingredients(lowercase) key required(value must be an object with keys of the string-type)');
+    responseBody.success = false;
+    responseBody.errors.ingredientsError = 'ingredients(lowercase) property required(value must be an object with properties of the string-type)';
   }
   else if (typeof req.body.ingredients !== "object") {
-    response.push('value of ingredients key must be an object with keys of the string-type');
+    responseBody.success = false;
+    responseBody.errors.ingredientsError ='value of ingredients property must be an object with properties of the string-type';
   }
   else if (Object.keys(req.body.ingredients).length === 0) {
-    response.push('ingredients object must have at least one key(of string-type)')
+    responseBody.success = false;
+    responseBody.errors.ingredientsError = 'ingredients object must have at least one property(of string-type)'
+  }
+  else for (const ingredient in req.body.ingredients) {
+    if (typeof ingredient !== "string") {
+      responseBody.success = false;
+      responseBody.errors.ingredientsError = 'properties of ingredients object must be strings'
+    }
   }
 
-  if (response.length === 0) {
-    formattedDatabase.push(req.body);
+  if (req.body.maxIngredients) {
+    if (typeof req.body.maxIngredients !== "number") {
+      responseBody.success = false;
+      responseBody.errors.maxIngredientsError ='value of maxIngredients must be a number'
+    }
   }
-  res.send(response);
+
+  if (req.body.minIngredients) {
+    if (typeof req.body.minIngredients !== "number") {
+      responseBody.success = false;
+      responseBody.errors.minIngredientsError ='value of minIngredients must be a number'
+    }
+  }
+
+  else if (req.body.maxIngredients && req.body.minIngredients) {
+    if (req.body.maxIngredients < req.body.minIngredients) {
+      responseBody.success = false;
+      responseBody.errors.minIngredientsError ='value of minIngredients cannot be larger than value of maxIngredients)';
+    }
+  }
+  if (responseBody.success === true) {
+    formattedDatabase.push(req.body);
+    res.status(201).send(responseBody);
+  }
+  else {
+    res.status(400).send(responseBody);
+  }
 }
 )
 
-/*
-
-            res.send(response???
-                Code 200 Description successful operation <br>
-        Code 405 Description Invalid input)
-*/
-
-app.get('/cocktail-recipes', (req, res) => {
+app.get('/v1/cocktail-recipes', (req, res) => {
   if (req.query.name) {
     searchName = req.query.name.toLowerCase();
   }

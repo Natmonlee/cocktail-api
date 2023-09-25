@@ -1,40 +1,44 @@
-const glassResultSection = document.getElementById("glassResult");
-const ingredientResultSection = document.getElementById("ingredientResult");
-const cocktailResultSection = document.getElementById("cocktailResult");
-const postResultSection = document.getElementById("postResult");
+let glassResultSection = document.getElementById("glassResult");
+let ingredientResultSection = document.getElementById("ingredientResult");
+let cocktailResultSection = document.getElementById("cocktailResult");
+let postResultSection = document.getElementById("postResult");
+let endpointText = document.getElementById("endpointText");
+let example = document.getElementById("example");
+let responseStatus = document.getElementById("responseStatus");
+let responseBody = document.getElementById("responseBody");
 
-const menuItem1 = document.getElementById('menuItem1');
 const dropItem1 = document.getElementById('dropItem1');
-const menuItem2 = document.getElementById('menuItem2');
 const dropItem2 = document.getElementById('dropItem2');
-const menuItem3 = document.getElementById('menuItem3');
 const dropItem3 = document.getElementById('dropItem3');
-const menuItem4 = document.getElementById('menuItem4');
 const dropItem4 = document.getElementById('dropItem4');
+const clickArea1 = document.getElementById('clickArea1');
+const clickArea2 = document.getElementById('clickArea2');
+const clickArea3 = document.getElementById('clickArea3');
+const clickArea4 = document.getElementById('clickArea4');
 
-const addDropdownOnClick = (menuItem, dropItem) => {
-    menuItem.addEventListener("click", () => dropItem.classList.toggle("dropDownActive"));
+
+const addDropdownOnClick = (clickArea, dropItem) => {
+    clickArea.addEventListener("click", () => dropItem.classList.toggle("dropDownActive"));
 };
 
-addDropdownOnClick(menuItem1, dropItem1);
-addDropdownOnClick(menuItem2, dropItem2);
-addDropdownOnClick(menuItem3, dropItem3);
-addDropdownOnClick(menuItem4, dropItem4);
+addDropdownOnClick(clickArea1, dropItem1);
+addDropdownOnClick(clickArea2, dropItem2);
+addDropdownOnClick(clickArea3, dropItem3);
+addDropdownOnClick(clickArea4, dropItem4);
+
 
 const getResult = async () => {
-    let ingredients = ['rum','vodka','orange','ice','cream'];
-    //const endpoint = "http://13.41.54.243/";
-    const glassEndpoint = 'http://localhost:5000/v1/cocktail-glasses'
-    const ingredientEndpoint = 'http://localhost:5000/v1/cocktail-ingredients'
-    const cocktailEndpoint = "http://localhost:5000/cocktail-recipes?name=martini";
-    const postEndpoint = "http://localhost:5000/v1/add-cocktail";
-    try {
 
+
+    //const endpoint = "http://13.41.54.243/";
+    const glassEndpoint = 'http://13.41.54.243/v1/cocktail-glasses'
+    const ingredientEndpoint = 'http://localhost:5000/v1/cocktail-ingredients'
+
+    try {
+        
         let headers = new Headers();
         headers.append("Content-type", "application/json");
         headers.append("Accept", "application/json");
-        headers.append("Origin", "http://localhost:3000");
-
 
         const glassResponse = await fetch(glassEndpoint, {
             method: "GET"
@@ -42,50 +46,15 @@ const getResult = async () => {
         const ingredientResponse = await fetch(ingredientEndpoint, {
             method: "GET"
         });
-    
-        const postResponse = await fetch(postEndpoint, {
-            method: "POST",
-            headers: headers,
-            body: JSON.stringify({
-            "name": "New cocktail",
-            "alcoholic": true,
-            "glass": "cocktail glass",
-            "ingredients": {log:one},
-            "method": 'Mix it up!'
-        })
-        });
-
-        const cocktailResponse = await fetch(cocktailEndpoint, {
-            method: "GET"
-        });
-
-
         if (glassResponse.ok) {
             const glassResultText = await glassResponse.json();
-            glassResultSection.innerHTML = JSON.stringify(glassResultText);
+            glassResult.innerHTML = JSON.stringify(glassResultText);
             }
-        
         if (ingredientResponse.ok) {
             const ingredientResultText = await ingredientResponse.json();
             ingredientResultSection.innerHTML = JSON.stringify(ingredientResultText);
             }
-
-        if (postResponse.ok) {
-            const postResultText = await postResponse.json();
-            postResultSection.innerHTML = JSON.stringify(postResultText);  
-            }
-        
-        
-        if (cocktailResponse.ok) {
-            const cocktailResultText = await cocktailResponse.json();
-            cocktailResultSection.innerHTML = JSON.stringify(cocktailResultText, null, 4);
         }
-
-    
-        }
-
-
-    
     catch (error) {
         console.log(error);
         throw new Error('Request failed!');
@@ -93,3 +62,93 @@ const getResult = async () => {
 }
 
 getResult();
+
+const searchCocktails = async () => {
+    let cocktailEndpoint = "http://localhost:5000/v1/cocktail-recipes?";
+    let nameInput = document.getElementById("name").value;
+    let alcoholicTrueInput = document.getElementById("true").checked;
+    let alcoholicFalseInput = document.getElementById("false").checked;
+    let glassInput = document.getElementById("glass").value;
+    let ingredientsInput = document.getElementById("ingredients").value;
+    let minIngredientsInput = document.getElementById("minIngredients").options.selectedIndex;
+    let maxIngredientsInput = document.getElementById("maxIngredients").options.selectedIndex;
+
+    if (nameInput) {
+        cocktailEndpoint += "name=" + nameInput + "&";
+    }
+    if (alcoholicTrueInput) {
+        cocktailEndpoint += "alcoholic=true&";
+    }
+    if (alcoholicFalseInput) {
+        cocktailEndpoint += "alcoholic=false&";
+    }
+    if (glassInput) {
+        cocktailEndpoint += "glass=" + glassInput + "&";
+    }
+    if (ingredientsInput) {
+        cocktailEndpoint += "ingredients=" + ingredientsInput + "&";
+    }
+    if (minIngredientsInput) {
+        cocktailEndpoint += "minIngredients=" + minIngredientsInput + "&";
+    }
+    if (maxIngredientsInput) {
+        cocktailEndpoint += "maxIngredients=" + maxIngredientsInput + "&";
+    }
+
+    try {
+        let cocktailResponse = await fetch(cocktailEndpoint, {
+            method: "GET"
+        });
+
+        if (cocktailResponse.ok) {
+            let cocktailResultText = await cocktailResponse.json();
+            endpointText.innerHTML = "Endpoint: "+ cocktailEndpoint;
+            example.innerHTML = "";
+            cocktailResultSection.innerHTML = JSON.stringify(cocktailResultText, null, 4);
+        }
+    }
+    catch (error) {
+        console.log(error);
+        throw new Error('Request failed!');
+    };
+}
+
+
+const addCocktail = async () => {
+    const postEndpoint = "http://localhost:5000/v1/add-cocktail";
+
+    try {
+        let headers = new Headers();
+        headers.append("Content-type", "application/json");
+        headers.append("Accept", "application/json");
+        headers.append("Origin", "http://localhost:3000");
+
+        let postInput = document.getElementById("postInput").innerHTML;
+        let postInputFormatted = postInput.replaceAll('\n', '');
+
+        let postResponse = await fetch(postEndpoint, {
+            method: "POST",
+            headers: headers,
+            body: postInputFormatted
+            
+        });
+            let postResponseBody = await postResponse.json();
+            responseStatus.innerHTML = `${postResponse.status}<br>${postResponse.statusText}`;
+            console.log(postResponseBody);
+            responseBody.innerHTML = JSON.stringify(postResponseBody);
+        }
+    
+    catch (error) {
+        console.log(error);
+        throw new Error('Request failed!');
+    };
+    
+    
+}
+
+
+const getSubmitButton = document.getElementById("getCocktailSubmit");
+getSubmitButton.addEventListener("click", searchCocktails);
+
+const postSubmitButton = document.getElementById("postCocktailSubmit");
+postSubmitButton.addEventListener("click", addCocktail);

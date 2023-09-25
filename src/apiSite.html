@@ -11,71 +11,199 @@
     <h1>Base URL: ????????????</h1>
     <p>This API allows the user to access a database of cocktail recipes. You can filter results by cocktail name, ingredients, glass type and whether or not the cocktail contains alcohol.</p>
     <h2>Endpoints</h2>
-    <div id="menuItem1" class="menuItem getItem">
-        <div><span class="getText">GET</span> - /v1/cocktail-recipes </div><div class="downArrow">&#8964</div>
-        <div id="dropItem1" class="dropItemGet">
-            <p>Retrieves cocktail recipes from the database that match the parameters you have provided - or all cocktails if no parameters are added.</p>
-            <h4>Parameters</h4>
-            <p>
-                Name - string (case-insensitive) - optional => Only cocktails with names including this string will be returned <br>
-                Alcoholic - boolean - optional => If true, only cocktails with alcohol will be returned, if false, only cocktails without alcohol will be returned <br>
-                Glass - string (case-insensitive) - optional => Only cocktails with glasses including this string will be returned <br>
-                Ingredients - comma-separated strings - optional => Only cocktails with ingredients including all strings in array will be returned <br>
-                MinIngredients - number - optional (default = 1) => Only cocktails with a minimum of this number of ingredients will be returned <br>
-                MaxIngredients - number - optional (default = infinity) => Only cocktails with a maximum of this number of ingredients will be returned <br>
-            </p>
-            <h4>Response</h4>
-            <h5>JSON object containing all cocktails matching the specifications</h5>
-            <pre class="result" id="cocktailResult"></pre>
+    <div class="getItem">
+        <div id="clickArea1" class="clickArea">
+            <div>
+                <span class="getText">GET</span><span class="bold"> /v1/cocktail-recipes </span><span class="small">get cocktail recipes from database</span>
+            </div>
+        <div><img class="arrow"src="arrow.png"></div>
+        </div>
+        <div id="dropItem1" class="dropItem">
+            <div><h3>Parameters</h3><p>Optional query strings: name, alcoholic, glass, ingredients, minIngredients, maxIngredients (all case-insensitive)</p></div>
+            <div class="inputSection">
+                <div><h4>Name</h1></div>
+                <div><h4>Description</h4></div>
+                <div><p>name</p></div>
+                <div>
+                    <label for="name">Filter by name/partial name of cocktail</label>
+                </div>
+                <div class="dataType"><p>string</p></div>
+                <div>
+                    <input type="text" id="name" name="name"><br>
+                </div>
+                <div><p>alcoholic</p></div>
+                <div><p>Filter by whether cocktail contains alcohol</p></div>
+                <div class="dataType"><p>boolean</p></div>
+                <div>
+                    <input type="radio" id="default" name="alcoholic" checked>
+                    <label for="default">default</label><br>
+                    <input type="radio" id="true" name="alcoholic" value="true">
+                    <label for="true">true</label><br>
+                    <input type="radio" id="false" name="alcoholic" value="false">
+                    <label for="false">false</label>
+                </div>
+                <div><p>glass</p></div>
+                <div>
+                    <label for="glass">Filter by name/partial name of glass</label>
+                </div>
+                <div class="dataType"><p>string</p></div>
+                <div>
+                    <input type="text" id="glass" name="glass"><br>
+                </div>
+                <div><p>ingredients</p></div>
+                <div>
+                    <label for="ingredients">Filter by all input ingredients</label>
+                </div>
+                <div class="dataType"><p>comma-separated string</p></div>
+                <div>
+                    <input type="text" id="ingredients" name="ingredients"><br>
+                </div>
+                <div><p>minIngredients(default 1)</p></div>
+                <div>
+                    <label for="minIngredients">Filter by minimum number of ingredients</label></div>
+                <div class="dataType"><p>number</p></div>
+                <div>
+                    <select id="minIngredients" name="minIngredients">
+                        <option>default</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                    </select>
+                </div>
+                <div>maxIngredients(default infinity)</div>
+                <div><label for="maxIngredients">Filter by maximum number of ingredients</label></div>
+                <div class="dataType"><p>number</p></div>
+                <div>
+                    <select id="maxIngredients" name="maxIngredients">
+                        <option>default</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                    </select>
+                </div>
+                <div class="submitDiv">
+                    <p id="endpointText"></p>
+                    <input type="submit" class="submitButton" id="getCocktailSubmit" value="Customise Response">
+                </div>
+            </div>
+            <div><h3>Response Status Code & Text</h3><p>200<br>OK</p><h3>Response Body</h3><p>JSON object containing all cocktails filtered by input parameters<br><span id="example">Example:</span></p></div>
+            <div>
+                <pre class="result" id="cocktailResult">
+{
+    "name": "Cocktail One",
+    "alcoholic": true,
+    "glass": "example glass",
+    "photoUrl": "http://www.example.com/one",
+    "ingredients": {
+        "ingredient one": "measurement one",
+        "ingredient two": "measurement two",
+        "ingredient three": "measurement three"
+    },
+    "method": "Example method."
+},
+{
+    "name": "Cocktail Two",
+    "alcoholic": false,
+    "glass": "example glass",
+    "photoUrl": "http://www.example.com/two",
+    "ingredients": {
+        "ingredient one": "measurement one",
+        "ingredient two": "measurement two",
+        "ingredient three": "measurement three"
+    },
+    "method": "Example method."
+}
+                </pre>
+            </div>
+        </div> 
+    </div>
+    <div class="getItem">
+        <div id="clickArea2" class="clickArea">
+            <div>
+                <span class="getText">GET</span><span class="bold"> /v1/cocktail-glasses </span><span class="small">get all cocktail glasses in database</span>
+            </div>
+            <div><img class="arrow"src="arrow.png"></div>
+        </div>
+        <div id="dropItem2" class="dropItem">
+            <div><h3>Parameters</h3><p>None</p></div>
+            <div><h3>Response Status Code & Text</h3><p>200<br>OK</p><h3>Response Body</h3><p>Array of all glasses in database</p></div>
+            <div><p class="result" id="glassResult"></p></div>
         </div>
     </div>
-    <div id="menuItem2" class="menuItem getItem">
-        <div><span class="getText">GET</span> - /v1/cocktail-glasses </div><div class="downArrow">&#8964</div>
-        <div id="dropItem2" class="dropItemGet">
-            <p>Retrieves all of the different glasses of the cocktails in the database.</p>
-            <h4>Parameters</h4>
-            <p>None</p>
-            <h4>Response</h4>
-            <h5>Array containing all glasses in database</h5>
-            <p class="result" id="glassResult"></p>
+    <div class="getItem">
+        <div id="clickArea3" class="clickArea">
+            <div>
+                <span class="getText">GET</span><span class="bold"> /v1/cocktail-ingredients </span><span class="small">get all cocktail ingredients in database</span>
+            </div>
+            <div><img class="arrow"src="arrow.png"></div>
+        </div>
+        <div id="dropItem3" class="dropItem">
+            <div><h3>Parameters</h3><p>None</p></div>
+            <div><h3>Response Status Code & Text</h3><p>200<br>OK</p><h3>Response Body</h3><p>Array of all ingredients in database</p></div>
+            <div><p class="result" id="ingredientResult"></p></div>
         </div>
     </div>
-    <div id="menuItem3" class="menuItem getItem">
-        <div><span class="getText">GET</span> - /v1/cocktail-ingredients </div><div class="downArrow">&#8964</div>
-        <div id="dropItem3" class="dropItemGet">
-        <p>Retrieves all of the different ingredients of the cocktails in the database.</p>
-        <h4>Parameters</h4>
-        <p>None</p>
-        <h4>Response</h4>
-        <h5>Array containing ingredients in database</h5>
-        <p class="result" id="ingredientResult"></p>
+    <div class="postItem">
+        <div id="clickArea4" class="clickArea">
+            <div>
+                <span class="postText">POST</span><span class="bold"> /v1/add-cocktail </span><span class="small">add cocktail to database</span>
+            </div>
+            <div><img class="arrow"src="arrow.png"></div>
+        </div>
+        <div id="dropItem4" class="dropItem">
+            <div>
+                <h3>Parameters</h3>
+                <p>Object(JSON data format) in request body with properties:<br><br>
+                name<span class="dataType"> string </span><span class="smaller">required</span><br>
+                alcoholic<span class="dataType"> boolean </span><span class="smaller">required</span><br>
+                ingredients<span class="dataType"> object </span><span class="smaller">required</span><br>
+                method<span class="dataType"> string </span><span class="smaller">required</span><br>
+                glass<span class="dataType"> string </span><span class="smaller">optional</span><br>
+                photoUrl<span class="dataType"> string </span><span class="smaller">optional(URL must be valid)</span>
+                </p>
+            </div>
+            <div class="postEditable">
+                <p class="edit">Click to edit</p>
+                <pre contenteditable="true" id="postInput">
+{
+    "name": "New Cocktail",
+    "alcoholic": true,
+    "ingredients": {
+        "ingredient1": "3 measures",
+        "ingredient2": "1 measure",
+        "ingredient3": "Half a measure"
+    },
+    "method": "Example method",
+    "glass": "Example glass",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2b/The_Official_Queen_Mary_Cocktail.jpg"
+}
+                </pre>
+            </div>
+            <input type="submit" class="submitButton" id="postCocktailSubmit" value="Add cocktail">
+            <div>
+                <h3>Response Status Code & Text</h3>
+                <p id="responseStatus" class="result">Possible Outcomes<br>201 - Created<br>400 - Bad Request</p>
+                <h3>Response Body</h3>
+                <pre id="responseBody" class="result">Possible Outcomes<br>{"status":"true","errors":{}}<br>{"status":"false","errors":{"firstErrorName":"error details", "secondErrorName":"error details"}}</pre>
+            </div>
         </div>
     </div>
-    <div id="menuItem4" class="menuItem postItem">
-        <div><span class="postText">POST</span> - /v1/add-cocktail </div> <div class="downArrow">&#8964</div>
-        <div id="dropItem4" class="dropItemPost">
-        <p>Add a cocktail to the database</p>
-        <h4>Parameters</h4>
-        <p>Body - object - required => 
-            Object properties: <br>
-            name (string) required <br>
-            alcoholic (boolean) required<br>
-            glass (string) optional <br>
-            photoUrl (string - valid url) optional <br>
-            ingredients (object with properties of the String data-type) required <br>
-            method (string) required <br>
-        </p>
-        <h4>Response</h4>
-        <h5>
-            ???????????? <br>
-        Code 200 Description successful operation <br>
-        Code 405 Description Invalid input
-        </h5>
-        <p class="result" id="postResult"></p>
-        </div>
-    </div>
-   
-
     <script src="../apiTest.js" type="text/javascript"></script>
 </body>
 </html>
