@@ -9,3 +9,7 @@ The user can also filter cocktails using query parameters.
 The API documentation website contains details regarding endpoints, parameters and responses.
 For each endpoint there are examples and the interface allows the user to easily customise and test the endpoints which allow parameters.
 I used vanilla Javascript, HMTL and CSS - including Flexbox and Grid.
+
+![image](https://github.com/Natmonlee/CocktailApi/assets/126959061/7d8e3e37-74d2-4308-b906-f6251e3051d9)
+
+![image](https://github.com/Natmonlee/CocktailApi/assets/126959061/1630b610-9dcd-4558-bbe7-8f1bfa5bce97)
