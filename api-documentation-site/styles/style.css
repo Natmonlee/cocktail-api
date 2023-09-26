@@ -28,24 +28,25 @@ body {
 }
 
 .dropItem {
-    display: none; 
+    display: none;
     box-sizing: border-box;
     width: 100%;
     border-radius: 5px;
     padding: 6px 6px;
-    
+
 }
 
 .dropDownActive {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
     row-gap: 15px;
-} 
+}
 
 .result {
     background-color: rgba(0, 0, 0, 0.879);
     color: rgba(255, 255, 255, 0.945);
     width: 80%;
+    text-wrap: wrap;
     border-radius: 4px;
     font-family: monospace;
     font-size: 15px;
@@ -93,13 +94,15 @@ body {
     grid-column: 2;
 }
 
-input, select {
+input,
+select {
     padding: 3px;
     font-size: 16px;
     margin-bottom: 20px;
 }
 
-#default, #true {
+#default,
+#true {
     margin-bottom: 0px;
 }
 
@@ -107,7 +110,10 @@ input, select {
     font-style: italic;
 }
 
-h4, h3, p, pre {
+h4,
+h3,
+p,
+pre {
     margin-block: 0px;
 }
 

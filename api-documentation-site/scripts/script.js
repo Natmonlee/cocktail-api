@@ -28,14 +28,10 @@ addDropdownOnClick(clickArea4, dropItem4);
 
 
 const getResult = async () => {
-
-
-    //const endpoint = "http://13.41.54.243/";
     const glassEndpoint = 'http://13.41.54.243/v1/cocktail-glasses'
-    const ingredientEndpoint = 'http://localhost:5000/v1/cocktail-ingredients'
+    const ingredientEndpoint = 'http://13.41.54.243/v1/cocktail-ingredients'
 
     try {
-        
         let headers = new Headers();
         headers.append("Content-type", "application/json");
         headers.append("Accept", "application/json");
@@ -49,12 +45,12 @@ const getResult = async () => {
         if (glassResponse.ok) {
             const glassResultText = await glassResponse.json();
             glassResult.innerHTML = JSON.stringify(glassResultText);
-            }
+        }
         if (ingredientResponse.ok) {
             const ingredientResultText = await ingredientResponse.json();
             ingredientResultSection.innerHTML = JSON.stringify(ingredientResultText);
-            }
         }
+    }
     catch (error) {
         console.log(error);
         throw new Error('Request failed!');
@@ -64,7 +60,7 @@ const getResult = async () => {
 getResult();
 
 const searchCocktails = async () => {
-    let cocktailEndpoint = "http://localhost:5000/v1/cocktail-recipes?";
+    let cocktailEndpoint = "http://13.41.54.243/v1/cocktail-recipes?";
     let nameInput = document.getElementById("name").value;
     let alcoholicTrueInput = document.getElementById("true").checked;
     let alcoholicFalseInput = document.getElementById("false").checked;
@@ -102,7 +98,7 @@ const searchCocktails = async () => {
 
         if (cocktailResponse.ok) {
             let cocktailResultText = await cocktailResponse.json();
-            endpointText.innerHTML = "Endpoint: "+ cocktailEndpoint;
+            endpointText.innerHTML = "Endpoint: " + cocktailEndpoint;
             example.innerHTML = "";
             cocktailResultSection.innerHTML = JSON.stringify(cocktailResultText, null, 4);
         }
@@ -115,37 +111,31 @@ const searchCocktails = async () => {
 
 
 const addCocktail = async () => {
-    const postEndpoint = "http://localhost:5000/v1/add-cocktail";
+    const postEndpoint = "http://13.41.54.243/v1/add-cocktail";
 
     try {
         let headers = new Headers();
         headers.append("Content-type", "application/json");
         headers.append("Accept", "application/json");
-        headers.append("Origin", "http://localhost:3000");
 
         let postInput = document.getElementById("postInput").innerHTML;
         let postInputFormatted = postInput.replaceAll('\n', '');
-
         let postResponse = await fetch(postEndpoint, {
             method: "POST",
             headers: headers,
             body: postInputFormatted
-            
         });
-            let postResponseBody = await postResponse.json();
-            responseStatus.innerHTML = `${postResponse.status}<br>${postResponse.statusText}`;
-            console.log(postResponseBody);
-            responseBody.innerHTML = JSON.stringify(postResponseBody);
-        }
-    
+        
+        let postResponseBody = await postResponse.json();
+        responseStatus.innerHTML = `${postResponse.status}<br>${postResponse.statusText}`;
+        console.log(postResponseBody);
+        responseBody.innerHTML = JSON.stringify(postResponseBody);
+    }
     catch (error) {
         console.log(error);
         throw new Error('Request failed!');
     };
-    
-    
 }
-
 
 const getSubmitButton = document.getElementById("getCocktailSubmit");
 getSubmitButton.addEventListener("click", searchCocktails);

@@ -27,18 +27,18 @@ const formatRecipe = (rawRecipe) => {
   recipe.photoUrl = rawRecipe.Photo;
   let ingredients = {};
   for (let i = 0; i < 16; i++) {
-      for (const [key, value] of Object.entries(rawRecipe)){
-          if (key === 'Ingredient ' + i) {
-              if (value) {
-                  ingredients[value.toLowerCase()] = rawRecipe['Measurement ' + i].toLowerCase();
-              }
-          }      
+    for (const [key, value] of Object.entries(rawRecipe)) {
+      if (key === 'Ingredient ' + i) {
+        if (value) {
+          ingredients[value.toLowerCase()] = rawRecipe['Measurement ' + i].toLowerCase();
+        }
       }
+    }
   }
   recipe.ingredients = ingredients;
   recipe.method = rawRecipe.Method;
   return recipe;
-} 
+}
 
 const formatDatabase = (database) => {
   for (const recipe of database) {
@@ -51,15 +51,16 @@ const formatDatabase = (database) => {
 
 fs.readFile("all_drinks.csv", "utf-8", (err, data) => {
   if (err) {
-    console.log(err)}
+    console.log(err)
+  }
   else {
-    cocktailDatabase = papa.parse(data, {header:true});
+    cocktailDatabase = papa.parse(data, { header: true });
     formatDatabase(cocktailDatabase.data);
-}
+  }
 })
 
 const generateResults = (database) => {
-  
+
   const checkName = (inputName, recipe) => {
     if (!inputName) {
       return true;
@@ -75,10 +76,10 @@ const generateResults = (database) => {
     }
     else {
       let alcoholPreference = true;
-    if (inputAlcohol === 'false') {
-      alcoholPreference = false;
-    }
-    return recipe.alcoholic === alcoholPreference;
+      if (inputAlcohol === 'false') {
+        alcoholPreference = false;
+      }
+      return recipe.alcoholic === alcoholPreference;
     }
   };
 
@@ -106,7 +107,7 @@ const generateResults = (database) => {
         }
         if (included === false) {
           return false;
-        }     
+        }
       }
       return true;
     }
@@ -137,7 +138,7 @@ const generateResults = (database) => {
     }
   }
   return results;
-} 
+}
 
 const returnAll = (param, database) => {
   const resultSet = new Set();
@@ -158,7 +159,7 @@ const returnAllIngredients = (database) => {
   }
   const resultArray = [...resultSet];
   return resultArray;
-} 
+}
 
 function isUrlValid(string) {
   try {
@@ -167,11 +168,11 @@ function isUrlValid(string) {
   } catch (err) {
     return false;
   }
- }
+}
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.append("Access-Control-Allow-Origin", "*");
   res.append(
     "Access-Control-Allow-Headers",
@@ -188,7 +189,7 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-app.post('/v1/add-cocktail', (req,res) => {
+app.post('/v1/add-cocktail', (req, res) => {
   let responseBody = {
     "success": true,
     "errors": {}
@@ -240,7 +241,7 @@ app.post('/v1/add-cocktail', (req,res) => {
   }
   else if (typeof req.body.ingredients !== "object") {
     responseBody.success = false;
-    responseBody.errors.ingredientsError ='value of ingredients property must be an object with properties of the string-type';
+    responseBody.errors.ingredientsError = 'value of ingredients property must be an object with properties of the string-type';
   }
   else if (Object.keys(req.body.ingredients).length === 0) {
     responseBody.success = false;
@@ -256,21 +257,21 @@ app.post('/v1/add-cocktail', (req,res) => {
   if (req.body.maxIngredients) {
     if (typeof req.body.maxIngredients !== "number") {
       responseBody.success = false;
-      responseBody.errors.maxIngredientsError ='value of maxIngredients must be a number'
+      responseBody.errors.maxIngredientsError = 'value of maxIngredients must be a number'
     }
   }
 
   if (req.body.minIngredients) {
     if (typeof req.body.minIngredients !== "number") {
       responseBody.success = false;
-      responseBody.errors.minIngredientsError ='value of minIngredients must be a number'
+      responseBody.errors.minIngredientsError = 'value of minIngredients must be a number'
     }
   }
 
   else if (req.body.maxIngredients && req.body.minIngredients) {
     if (req.body.maxIngredients < req.body.minIngredients) {
       responseBody.success = false;
-      responseBody.errors.minIngredientsError ='value of minIngredients cannot be larger than value of maxIngredients)';
+      responseBody.errors.minIngredientsError = 'value of minIngredients cannot be larger than value of maxIngredients)';
     }
   }
   if (responseBody.success === true) {
