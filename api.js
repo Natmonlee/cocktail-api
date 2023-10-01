@@ -13,6 +13,7 @@ let searchIngredients;
 let allGlasses;
 let searchMinIngredients;
 let searchMaxIngredients;
+const path = require('path');
 
 const formatRecipe = (rawRecipe) => {
   let recipe = {};
@@ -49,7 +50,7 @@ const formatDatabase = (database) => {
   return formattedDatabase;
 }
 
-fs.readFile("all_drinks.csv", "utf-8", (err, data) => {
+fs.readFile("./documentation/assets/data/all_drinks.csv", "utf-8", (err, data) => {
   if (err) {
     console.log(err)
   }
@@ -319,4 +320,23 @@ app.get('/v1/cocktail-ingredients', (req, res) => {
 }
 )
 
+app.use(express.static(__dirname + '/documentation'))
 
+app.get('/v1/eggs', (req, res) => {
+  res.sendFile(__dirname + '/documentation/index.html')
+}
+)
+
+
+/* app.use(function (req, res, next) {
+  res.append("Access-Control-Allow-Origin", "*");
+  res.append(
+    "Access-Control-Allow-Headers",
+    "Origin, Content-Type, Accept"
+  );
+  res.append(
+    "Access-Control-Allow-Methods",
+    "GET, POST"
+  );
+  next();
+}); */
