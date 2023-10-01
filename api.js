@@ -322,21 +322,7 @@ app.get('/v1/cocktail-ingredients', (req, res) => {
 
 app.use(express.static(__dirname + '/documentation'))
 
-app.get('/v1/eggs', (req, res) => {
+app.get('/v1/documentation', (req, res) => {
   res.sendFile(__dirname + '/documentation/index.html')
 }
 )
-
-
-/* app.use(function (req, res, next) {
-  res.append("Access-Control-Allow-Origin", "*");
-  res.append(
-    "Access-Control-Allow-Headers",
-    "Origin, Content-Type, Accept"
-  );
-  res.append(
-    "Access-Control-Allow-Methods",
-    "GET, POST"
-  );
-  next();
-}); */
