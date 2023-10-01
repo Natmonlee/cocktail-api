@@ -1,4 +1,4 @@
-# CocktailApi - Ccoktail API and API documentation site
+# CocktailApi - Cocktail API and API documentation site
 
 This is a RESTful API built using Node and Express that allows the user to fetch from and add to a dataset of cocktail recipes(downloaded from https://www.kaggle.com/datasets/ai-first/cocktail-ingredients)
 There are four endpoints - one POST and three GET.
