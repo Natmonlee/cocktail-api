@@ -253,6 +253,10 @@ app.post('/v1/add-cocktail', (req, res) => {
       responseBody.success = false;
       responseBody.errors.ingredientsError = 'properties of ingredients object must be strings'
     }
+    if (typeof req.body.ingredients[ingredient] !== "string" || typeof req.body.ingredients[ingredient] !== "number") {
+      responseBody.success = false;
+      responseBody.errors.ingredientsError = 'values of ingredients object must be strings or numbers'
+    } 
   }
 
   if (req.body.maxIngredients) {
