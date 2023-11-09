@@ -30,7 +30,6 @@ addDropdownOnClick(clickArea4, dropItem4);
 const getResult = async () => {
     const glassEndpoint = 'http://13.41.54.243/v1/cocktail-glasses'
     const ingredientEndpoint = 'http://13.41.54.243/v1/cocktail-ingredients'
-
     try {
         let headers = new Headers();
         headers.append("Content-type", "application/json");
@@ -112,7 +111,6 @@ const searchCocktails = async () => {
 
 const addCocktail = async () => {
     const postEndpoint = "http://13.41.54.243/v1/add-cocktail";
-
     try {
         let headers = new Headers();
         headers.append("Content-type", "application/json");

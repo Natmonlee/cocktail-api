@@ -286,6 +286,7 @@ app.post('/v1/add-cocktail', (req, res) => {
 )
 
 app.get('/v1/cocktail-recipes', (req, res) => {
+  console.log(req.query);
   if (req.query.name) {
     searchName = req.query.name.toLowerCase();
   }
@@ -304,7 +305,6 @@ app.get('/v1/cocktail-recipes', (req, res) => {
   if (req.query.maxIngredients) {
     searchMaxIngredients = req.query.maxIngredients;
   }
-
   res.send(generateResults(formattedDatabase));
 }
 )
