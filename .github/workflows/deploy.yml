@@ -1,0 +1,31 @@
+name: Deploy to Remote Server
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up SSH
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+    - name: Add remote server to known_hosts
+      run: ssh-keyscan -H 13.41.54.243 >> ~/.ssh/known_hosts
+
+    - name: Deploy to remote server
+      run: |
+        ssh -o StrictHostKeyChecking=no ec2-user@13.41.54.243 << 'EOF'
+          cd Code/CocktailApi/
+          git pull origin main
+          npm install # or pip install -r requirements.txt, etc.
+          pm2 restart all # or any command to restart your app, e.g., systemctl restart your-app
+        EOF
