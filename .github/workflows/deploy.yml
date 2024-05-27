@@ -19,7 +19,7 @@ jobs:
         chmod 600 ~/.ssh/id_rsa
 
     - name: Add remote server to known_hosts
-      run: ssh-keyscan -H your_remote_server_ip >> ~/.ssh/known_hosts
+      run: ssh-keyscan -H 13.41.54.243 >> ~/.ssh/known_hosts
 
     - name: Deploy to remote server
       run: |
